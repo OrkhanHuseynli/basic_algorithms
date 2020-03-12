@@ -9,7 +9,7 @@ func Search(array []int, targetValue int) int {
 
 func doBinarySearch(array []int, min, max, targetValue int) int {
 	// base case
-	if min >= max {
+	if min > max {
 		return -1
 	}
 
@@ -20,7 +20,7 @@ func doBinarySearch(array []int, min, max, targetValue int) int {
 	}
 	if guessValue > targetValue {
 		min = min
-		max = mid
+		max = mid -1
 		return doBinarySearch(array, min, max, targetValue)
 	}
 	if guessValue < targetValue {
