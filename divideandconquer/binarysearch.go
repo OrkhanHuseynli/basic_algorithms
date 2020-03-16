@@ -1,4 +1,4 @@
-package binarysearch
+package divideandconquer
 
 // BinarySearch works only for sorted arrays
 func Search(array []int, targetValue int) int {

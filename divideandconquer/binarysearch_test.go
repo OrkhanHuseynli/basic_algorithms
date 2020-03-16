@@ -1,4 +1,4 @@
-package binarysearch
+package divideandconquer
 
 import (
 	"github.com/stretchr/testify/assert"
