@@ -50,3 +50,9 @@ func TestMergeSortWithMaxInt(t *testing.T) {
 }
 
 
+func TestMergeSortWihNegativeIntegers(t *testing.T) {
+	actual := []int{40,-30,200,55,3,44,33,11,-2}
+	expected := []int{-30,-2,3,11,33,40,44,55,200}
+	MergeSort(actual, 0, len(actual)-1)
+	assert.Equal(t,expected, actual)
+}
