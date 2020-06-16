@@ -20,6 +20,42 @@ func FindPeakInMountainArray(A []int, start, end int) int {
 	return mid
 }
 
+func FindPeak(A []int) int {
+	return FindPeakInMountainArray(A, 0, len(A) -1 )
+}
+
+func FindPeakInMatrix(matrix [][]int) (int, int) {
+	//find mid row
+	nOfRows := len(matrix)
+	midRowIndex :=  nOfRows/2
+	midRow := matrix[midRowIndex]
+
+	//find peak
+	peakIndex := FindPeak(midRow)
+
+	// check the peak in the column
+	//	/		\
+	//        /			 \
+	//     return peak           search peak in the row where the peak is
+	column:= make([]int, nOfRows)
+	for i, row := range(matrix) {
+		column[i] = row[peakIndex]
+	}
+	// peak index in the column and index of a row at the same time
+	peakIndexInColumn := FindPeak(column)
+
+	if midRow[peakIndex] == column[peakIndexInColumn] {
+		return midRowIndex, peakIndex
+	}
+
+	targetRow := matrix[peakIndexInColumn]
+	peakIndex = FindPeak(targetRow)
+	return peakIndexInColumn, peakIndex
+}
+
+
+
+
 func FindPeakInMountainArraySequentially(row []int) int {
 	mid := 0
 	start := 0
