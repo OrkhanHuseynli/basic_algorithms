@@ -1,25 +1,24 @@
 package insertsort
 
-
 func InsertSort(A []int) []int {
-	n := len(A)
-	if n <=1 {
+	if len(A) < 2 {
 		return A
 	}
-	keyIndex := 1
-	for keyIndex < n {
-		key := A[keyIndex]
-		for i:=0; i<keyIndex; i++ {
-			if keyIndex > 0 && key < A[keyIndex-1-i] {
-				temp := A[keyIndex-i]
-				A[keyIndex-i] = A[keyIndex-1-i]
-				A[keyIndex-1-i] = temp
+
+	key := 1
+	for key < len(A) {
+
+		for i:= 0; i<key; i++{
+			temp := A[key-i]
+			if A[key-1-i] > A[key-i] {
+				A[key-i] = A[key-1-i]
+				A[key-1-i] = temp
 			}
 		}
-		keyIndex = keyIndex + 1
+
+		key = key+1
+
 	}
+
 	return A
 }
-
-
-
