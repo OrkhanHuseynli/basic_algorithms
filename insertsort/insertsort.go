@@ -37,21 +37,20 @@ func BinaryInsertSort(A []int) []int {
 	return A
 }
 
-func ShiftArray(A []int, from, to int) []int {     //[0,2], 0,1
-	if from<to{				// 0<1
-		i := from			// i = 0
-		current:=A[i]			// current = 0
-		next := A[i+1]			// temp = 2
-		for i < to-1 {			// for 0 < 0
-			A[i+1] = current	// A[i+1] = A[1] = 0
+func ShiftArray(A []int, from, to int) []int {
+	if from<to{
+		i := from
+		current:=A[i]
+		next := A[i+1]
+		for i < to-1 {
+			A[i+1] = current
 			current = next
-			next= A[i+2]		// next = A[2] = 4
+			next= A[i+2]
 			i=i+1
 		}
 		A[to] = current
 		A[from] = next
 	}
-
 	return A
 }
 
