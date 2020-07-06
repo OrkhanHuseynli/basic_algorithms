@@ -54,9 +54,6 @@ func ShiftArray(A []int, from, to int) []int {
 	return A
 }
 
-
-
-
 func BinarySearchForInsertSort(A []int, s, e, t int) int {
 	if e<=s {
 		if A[s]>=t {
