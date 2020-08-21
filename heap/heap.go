@@ -63,15 +63,12 @@ func swapKeys(A[]int, i,j int){
 	A[j] = temp
 }
 
-
-
-
 func (h *Heap) Insert(key int) {
 	h.heaparray = append(h.heaparray, key)
-	for i:= h.size()-1; i>=0; i-- {
-		if i >=0 && h.heaparray[i]<key {
-			h.heaparray[i]=h.heaparray[i/2]
-			i = i/2
-		}
+	i:=h.size()-1
+	for i  > 0 && h.heaparray[i/2]<key {
+		h.heaparray[i]=h.heaparray[i/2]
+		i = i/2
 	}
+	h.heaparray[i]=key
 }
