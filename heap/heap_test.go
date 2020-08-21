@@ -17,6 +17,7 @@ var flagtestsForHeapInsert = []struct {
 	{[]int{9,4,5,3}, 9},
 	{[]int{1,9,4,5,3}, 9},
 	{[]int{1,8,4,5,9}, 9},
+	{[]int{1,7,8,4,0,5}, 8},
 
 
 }
