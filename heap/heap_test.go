@@ -38,7 +38,6 @@ func TestSubArray(t *testing.T) {
 var flagtestsForHeapDelete = []struct {
 	values []int
 	out1 []int
-	//out2 []int
 }{
 	{[]int{5}, []int{5}},
 	{[]int{5,4}, []int{5,4}},
