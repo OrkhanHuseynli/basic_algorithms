@@ -42,16 +42,11 @@ var flagtestsForHeapDelete = []struct {
 }{
 	{[]int{5}, []int{5}},
 	{[]int{5,4}, []int{5,4}},
-	{[]int{5,4,3}, []int{5,3,4}},
-
-	//{[]int{4,5}, 5},
-	//{[]int{4,5,3}, 5},
-	//{[]int{9,4,5,3}, 9},
-	//{[]int{1,9,4,5,3}, 9},
-	//{[]int{1,8,4,5,9}, 9},
-	//{[]int{1,7,8,4,0,5}, 8},
-
-
+	{[]int{5,3,4}, []int{5,4,3}},
+	{[]int{5,3,4,0,2}, []int{5,4,3,2,0}},
+	{[]int{5,3,4,2,0}, []int{5,4,3,2,0}},
+	{[]int{5,3,4,2,0,3,1}, []int{5,4,3,3,2,1,0}},
+	{[]int{5,3,4,2,0,3,1,-2,-5,-3,-1}, []int{5,4,3,3,2,1,0,-1,-2,-3,-5}},
 }
 
 func TestHeap_Delete(t *testing.T) {
@@ -65,8 +60,6 @@ func TestHeap_Delete(t *testing.T) {
 				sortedArray[i] = heap.Delete()
 			}
 			assert.Equal(t, tt.out1, sortedArray)
-			//fmt.Println(heap.Max())
-			//assert.Equal(t, 0, heap.Max())
 		})
 	}
 }

@@ -86,10 +86,10 @@ func (h *Heap) Insert(key int) {
 }
 
 func (h *Heap) Delete() int {
-	if h.size()>0 {
+	if h.size()> 0 {
 		delItem := h.Max()
 		h.heaparray[0] = h.heaparray[h.size()-1]
-		h.heaparray = h.heaparray[:h.size()-2]
+		h.heaparray = h.heaparray[:h.size()-1]
 		h.MaxHeapify(0)
 		return delItem
 	}
