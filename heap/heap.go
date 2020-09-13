@@ -95,3 +95,11 @@ func (h *Heap) Delete() int {
 	}
 	panic("Heap array is empty")
 }
+
+func (h *Heap) BuildHeap(A []int){
+	h.heaparray = A
+	n := h.size()
+	for i:=n/2-1; i>=0 ; i-- {
+		h.MaxHeapify(i)
+	}
+}
