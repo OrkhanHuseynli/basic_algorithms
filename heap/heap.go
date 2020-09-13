@@ -2,104 +2,108 @@ package heap
 
 import "fmt"
 
-type Heap struct {
-	heaparray []int
+var enabledLogger = false
+
+func size(A *[]int) int {
+	return len(*A)
 }
 
-func (h *Heap) size() int {
-	return len(h.heaparray)
-}
-
-func (h *Heap) parent(i int) int {
+func parent(i int) int {
 	if i == 0 {
-		fmt.Println("Parent does not exist")
+		log("Parent does not exist")
 		return -1
 	}
 	return (i-1)/2
 }
 
-func  (h *Heap) left(i int) int {
+func left(A *[]int, i int) int {
 	value := 2*i+1
-	if value < h.size() {
+	if value < size(A) {
 		return value
 	}
-	fmt.Println("Left node does not exist")
+	log("Left node does not exist")
 	return -1
 }
 
-func (h *Heap) right(i int) int {
+func right(A *[]int, i int) int {
 	value := 2*i+2
-	if value < h.size() {
+	if value < size(A) {
 		return value
 	}
-	fmt.Println("Right node does not exist")
+	log("Right node does not exist")
 	return -1
 }
 
-func (h *Heap) Max() int {
-	if h.size()>0 {
-		return h.heaparray[0]
+func Max(A *[]int) int {
+	if size(A)>0 {
+		return (*A)[0]
 	}
 	panic("Heap array is empty")
 }
 
-func (h *Heap) MaxHeapify(i int){
-	l:=h.left(i)
-	r:=h.right(i)
+func MaxHeapify(A *[]int, i int){
+	l:=left(A,i)
+	r:=right(A,i)
 	largest:= i
 
-	if l < h.size() && l >=0 && h.heaparray[l]>h.heaparray[largest] {
+	if l > i && (*A)[l]>(*A)[largest] {
 		largest = l
 	}
 
-	if r<h.size() && r >=0 && h.heaparray[r]>h.heaparray[largest] {
+	if r > i && (*A)[r]>(*A)[largest] {
 		largest = r
 	}
 
 	if largest == i  {
 		return
 	}
-	swapKeys(h.heaparray, i, largest)
-	h.MaxHeapify(largest)
+	swapKeys(A, i, largest)
+	MaxHeapify(A,largest)
 }
 
-
-func swapKeys(A[]int, i,j int){
-	temp := A[i]
-	A[i] = A[j]
-	A[j] = temp
+func swapKeys(A *[]int, i,j int){
+	temp := (*A)[i]
+	(*A)[i] = (*A)[j]
+	(*A)[j] = temp
 }
 
-func (h *Heap) Insert(key int) {
-	h.heaparray = append(h.heaparray, key)
-	i:= h.size() - 1
+func Insert(A *[]int, key int){
+	*A = append(*A, key)
+	i:= size(A) - 1
 	for i  >= 0 {
-		parent := h.parent(i)
-		if parent >=0 && h.heaparray[parent]<key {
-			h.heaparray[i]=h.heaparray[parent]
+		parent := parent(i)
+		if parent >=0 && (*A)[parent]<key {
+			(*A)[i]=(*A)[parent]
 		}else{
-			h.heaparray[i]= key
+			(*A)[i]= key
 			return
 		}
 		i = parent
 	}
 }
 
-func (h *Heap) Delete() int {
-	if h.size()> 0 {
-		delItem := h.Max()
-		h.heaparray[0] = h.heaparray[h.size()-1]
-		h.heaparray = h.heaparray[:h.size()-1]
-		h.MaxHeapify(0)
+func RetrieveMax(A *[]int) int {
+	if size(A)> 0 {
+		delItem := Max(A)
+		(*A)[0] = (*A)[size(A)-1]
+		*A = (*A)[:size(A)-1]
+		MaxHeapify(A, 0)
 		return delItem
 	}
 	panic("Heap array is empty")
 }
 
-func (h *Heap) BuildHeap(A []int){
-	h.heaparray = A
-	n := h.size()
+func BuildHeap(A *[]int){
+	n := size(A)
 	for i:=n/2-1; i>=0 ; i-- {
-		h.MaxHeapify(i)
+		MaxHeapify(A, i)
 	}
 }
+
+
+func log(message interface{}){
+	if enabledLogger {
+		fmt.Println(message)
+	}
+}
+

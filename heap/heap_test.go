@@ -22,20 +22,48 @@ var flagtestsForHeapInsert = []struct {
 
 }
 
-func TestSubArray(t *testing.T) {
+func TestHeapInsert(t *testing.T) {
 	for i, tt := range flagtestsForHeapInsert {
+		var A []int
 		val := fmt.Sprintf("Test case # %v", i)
 		t.Run(val, func(t *testing.T) {
-			heap := Heap{}
 			for i:=0;i<len(tt.values); i++  {
-				heap.Insert(tt.values[i])
+				Insert(&A, tt.values[i])
 			}
-			assert.Equal(t, tt.out, heap.Max())
+			assert.Equal(t, tt.out, Max(&A))
 		})
 	}
 }
 
-var flagtestsForHeapDelete = []struct {
+var flagtestsForHeapMaxHeapify = []struct {
+	values []int
+	out1 []int
+}{
+	{[]int{5}, []int{5}},
+	{[]int{5,4}, []int{5,4}},
+	{[]int{4,5}, []int{5,4}},
+	{[]int{5,3,4}, []int{5,3,4}},
+	{[]int{5,4,2}, []int{5,4,2}},
+	{[]int{1,4,2}, []int{4,1,2}},
+	{[]int{1,2,4}, []int{4,2,1}},
+	{[]int{1,3,4,0,2}, []int{4,3,1,0,2}},
+	{[]int{1,4,3,0,2}, []int{4,2,3,0,1}},
+}
+
+func TestHeap_MaxHeapify(t *testing.T) {
+	for i, tt := range flagtestsForHeapMaxHeapify {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			l := len(tt.values)
+			for i:=0; i<l; i++ {
+				MaxHeapify(&tt.values,0)
+			}
+			assert.Equal(t, tt.out1, tt.values)
+		})
+	}
+}
+
+var flagtestsForHeapRetrieveMax = []struct {
 	values []int
 	out1 []int
 }{
@@ -49,15 +77,14 @@ var flagtestsForHeapDelete = []struct {
 	{[]int{5,3,4,2,0,3,1,-2,-5,-3,-1}, []int{5,4,3,3,2,1,0,-1,-2,-3,-5}},
 }
 
-func TestHeap_Delete(t *testing.T) {
-	for i, tt := range flagtestsForHeapDelete {
+func TestHeap_RetrieveMax(t *testing.T) {
+	for i, tt := range flagtestsForHeapRetrieveMax {
 		val := fmt.Sprintf("Test case # %v", i)
 		t.Run(val, func(t *testing.T) {
 			l := len(tt.values)
-			heap := Heap{tt.values}
 			sortedArray := make([]int, l)
 			for i:=0; i<l; i++ {
-				sortedArray[i] = heap.Delete()
+				sortedArray[i] = RetrieveMax(&tt.values)
 			}
 			assert.Equal(t, tt.out1, sortedArray)
 		})
@@ -84,11 +111,10 @@ func TestHeap_BuildHeap(t *testing.T) {
 		val := fmt.Sprintf("Test case # %v", i)
 		t.Run(val, func(t *testing.T) {
 			l := len(tt.values)
-			heap := Heap{}
-			heap.BuildHeap(tt.values)
+			BuildHeap(&tt.values)
 			sortedArray := make([]int, l)
 			for i:=0; i<l; i++ {
-				sortedArray[i] = heap.Delete()
+				sortedArray[i] = RetrieveMax(&tt.values)
 			}
 			assert.Equal(t, tt.out1, sortedArray)
 		})
