@@ -1,68 +1,57 @@
 package binarysearchtree
 
-
 type Node struct {
-	Key int
+	Key    int
 	Parent *Node
-	Left	*Node
-	Right	*Node
-	Size int
+	Left   *Node
+	Right  *Node
+	Size   int
 }
 
+type BST struct {
+	Root *Node
+}
 
-func (n *Node) Search( key int, returnVal *Node) bool {
-	if n== nil {
-		return false
-	}
+func NewBST(rootKey int) BST {
+	return BST{&Node{Key: rootKey}}
+}
+func (b *BST) Search(key int) *Node {
+	return Search(key, b.Root)
+}
 
-	if n.Key == key {
-		*returnVal = n
-		return true
+func Search( key int, n *Node) *Node {
+	if n.Key > key {
+		return Search(key, n.Left)
 	}
 
 	if n.Key < key {
-		return n.Left.Search(key, returnVal)
+		return Search(key, n.Right)
 	}
 
-	return n.Right.Search(key, returnVal)
-}
-
-
-type BST struct {
-
-	Root *Node
-
-}
-
-func (b *BST) Search(key int, returnVal *Node) bool {
-	if b.Root == nil {
-		return false
-	}
-	return b.Root.Search(key, returnVal)
+	return n
 }
 
 
 func (b *BST) Insert(key int) bool {
-	if b.Root == nil {
-		b.Root = &Node{Key: key}
-		return true
-	}
-
-	t:=b.Root
-
-	for t !=nil && t.Key != key {
-		if t.Key < key {
-			t = t.Left
-		} else {
-			t = t.Right
-		}
-	}
-
-	if  t == nil {
-		t = &Node{Key:key, Parent: t}
-		return true
-	}
-
-	return false
+	return Insert(key, b.Root)
 }
 
+func Insert(key int, n *Node) bool {
+	if n.Key > key {
+		if n.Left == nil {
+			newN := &Node{Key: key, Parent: n}
+			n.Left = newN
+			return true
+		}
+		return Insert(key, n.Left)
+	}
+	if n.Key < key {
+		if n.Right == nil {
+			newN := &Node{Key: key, Parent: n}
+			n.Right = newN
+			return true
+		}
+		return Insert(key, n.Right)
+	}
+	return false
+}
