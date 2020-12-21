@@ -20,16 +20,22 @@ func (b *BST) Search(key int) *Node {
 }
 
 func Search( key int, n *Node) *Node {
-	if n.Key > key {
+	var result *Node
+	if n.Key > key && n.Left != nil {
 		return Search(key, n.Left)
 	}
 
-	if n.Key < key {
+	if n.Key < key && n.Right != nil {
 		return Search(key, n.Right)
 	}
 
-	return n
+	if n.Key == key {
+		result = n
+	}
+	return result
 }
+
+
 
 
 func (b *BST) Insert(key int) bool {
@@ -55,3 +61,51 @@ func Insert(key int, n *Node) bool {
 	}
 	return false
 }
+
+func (b *BST) FindMinValNode() *Node {
+	return FindMinValNode(b.Root)
+}
+
+func FindMinValNode(n *Node) *Node {
+	for n.Left != nil {
+		n = n.Left
+	}
+	return n
+}
+
+
+func (b *BST) Delete (key int){
+	n := b.Search(key)
+	if n != nil {
+		Delete(n)
+	}
+}
+
+// replace with the smallest node in the right tree
+func Delete(n *Node){
+	var mN *Node
+	if n.Right != nil {
+		mN = FindMinValNode(n.Right)
+		n.Key = mN.Key
+		Delete(mN)
+	} else{
+		if n.Left != nil {
+			n.Left.Parent = n.Parent
+			*n = *n.Left
+		} else {
+			p := n.Parent
+			if p.Right  == n {
+				p.Right = nil
+			} else {
+				p.Left = nil
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
