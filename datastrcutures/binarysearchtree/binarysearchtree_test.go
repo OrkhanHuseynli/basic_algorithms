@@ -145,3 +145,30 @@ func TestBST_DeleteRoot(t *testing.T) {
 	assert.Equal(t, nilN, result.Left.Left)
 	assert.Equal(t, nilN, result.Left.Right)
 }
+
+
+func TestBST_FindNextLarger(t *testing.T) {
+	bst := NewBST(20)
+	bst.Insert(8)
+	bst.Insert(22)
+	bst.Insert(4)
+	bst.Insert(12)
+	bst.Insert(10)
+	bst.Insert(14)
+
+	nln := bst.FindNextLarger(20)
+	assert.Equal(t, 22, nln.Key)
+	nln = bst.FindNextLarger(22)
+	var nilNode *Node
+	assert.Equal(t, nilNode, nln)
+	nln = bst.FindNextLarger(8)
+	assert.Equal(t, 10, nln.Key)
+	nln = bst.FindNextLarger(4)
+	assert.Equal(t, 8, nln.Key)
+	nln = bst.FindNextLarger(12)
+	assert.Equal(t, 14, nln.Key)
+	nln = bst.FindNextLarger(10)
+	assert.Equal(t, 12, nln.Key)
+	nln = bst.FindNextLarger(14)
+	assert.Equal(t, 20, nln.Key)
+}

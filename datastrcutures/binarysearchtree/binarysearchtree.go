@@ -103,9 +103,23 @@ func Delete(n *Node){
 	}
 }
 
+func (b *BST) FindNextLarger(key int) *Node {
+	n := b.Search(key)
+	return FindNextLarger(n)
+}
 
+func FindNextLarger(n *Node) *Node {
 
+	if n.Right != nil {
+		return FindMinValNode(n.Right)
+	}
 
-
-
-
+	for n.Parent != nil {
+		if n.Parent.Right == n {
+			n = n.Parent
+		} else {
+			return  n.Parent
+		}
+	}
+	return n.Parent
+}
