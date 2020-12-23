@@ -13,7 +13,7 @@ type BST struct {
 }
 
 func NewBST(rootKey int) BST {
-	return BST{&Node{Key: rootKey}}
+	return BST{&Node{Key:rootKey, Size:1}}
 }
 func (b *BST) Search(key int) *Node {
 	return Search(key, b.Root)
@@ -42,23 +42,25 @@ func (b *BST) Insert(key int) bool {
 	return Insert(key, b.Root)
 }
 
-func Insert(key int, n *Node) bool {
+func Insert (key int, n *Node) bool {
+	n.Size = n.Size + 1
 	if n.Key > key {
 		if n.Left == nil {
-			newN := &Node{Key: key, Parent: n}
-			n.Left = newN
+			newN := &Node{ Key: key, Parent: n, Size: 1 }
+			n.Left  = newN
 			return true
 		}
 		return Insert(key, n.Left)
 	}
 	if n.Key < key {
 		if n.Right == nil {
-			newN := &Node{Key: key, Parent: n}
-			n.Right = newN
+			newN := &Node{ Key: key, Parent: n, Size: 1 }
+			n.Right  = newN
 			return true
 		}
 		return Insert(key, n.Right)
 	}
+	n.Size = n.Size - 1
 	return false
 }
 
@@ -99,7 +101,16 @@ func Delete(n *Node){
 			} else {
 				p.Left = nil
 			}
+			UpdateSizes(n.Parent, -1)
+
 		}
+	}
+}
+
+func UpdateSizes(n *Node, d int){
+	n.Size = n.Size + d
+	if n.Parent != nil {
+		UpdateSizes(n.Parent, d)
 	}
 }
 

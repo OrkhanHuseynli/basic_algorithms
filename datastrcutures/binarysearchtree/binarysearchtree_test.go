@@ -7,13 +7,18 @@ import (
 
 func TestBST_Insert(t *testing.T) {
 	bst := NewBST(40)
+	r:= bst.Root
+	assert.Equal(t, 1, r.Size)
 	bst.Insert(20)
+	assert.Equal(t, 2, r.Size)
 	bst.Insert(80)
+	assert.Equal(t, 3, r.Size)
 	bst.Insert(15)
 	bst.Insert(30)
 	bst.Insert(35)
+	assert.Equal(t, 6, r.Size)
 
-	r:= bst.Root
+
 	assert.Equal(t, 40, r.Key)
 	assert.Equal(t, 20, r.Left.Key)
 	assert.Equal(t, 80, r.Right.Key)
@@ -40,9 +45,12 @@ func TestBST_BSTSearch(t *testing.T) {
 
 	rn := bst.Search(40)
 	assert.Equal(t, 40, rn.Key)
+	assert.Equal(t, 6, rn.Size)
 	l := bst.Search(20)
+	assert.Equal(t, 4, l.Size)
 	assert.Equal(t, 20, l.Key)
 	r := bst.Search(80)
+	assert.Equal(t, 1, r.Size)
 	assert.Equal(t, 80, r.Key)
 
 	var n *Node
@@ -53,9 +61,12 @@ func TestBST_BSTSearch(t *testing.T) {
 	assert.Equal(t, rn, r.Parent)
 	ll := bst.Search(15)
 	assert.Equal(t, 15, ll.Key)
+	assert.Equal(t, 1, ll.Size)
 	assert.Equal(t, l, ll.Parent)
 	assert.Equal(t, 30, l.Right.Key)
+	assert.Equal(t, 2, l.Right.Size)
 	assert.Equal(t, 35, l.Right.Right.Key)
+	assert.Equal(t, 1, l.Right.Right.Size)
 }
 
 func TestBST_FindMinValNode(t *testing.T) {
@@ -109,18 +120,27 @@ func TestBST_Delete(t *testing.T) {
 	bst.Insert(15)
 	bst.Insert(30)
 	bst.Insert(35)
-
+	assert.Equal(t, 6, bst.Root.Size)
 	bst.Delete(20)
+	assert.Equal(t, 5, bst.Root.Size)
 	assert.Equal(t, 30, bst.Root.Left.Key)
 	result := bst.Search(20)
 	var nilN *Node
 	assert.Equal(t, nilN, result)
 	result = bst.Search(30)
+	assert.Equal(t, 3, result.Size)
 	assert.Equal(t, 35, result.Right.Key)
 	assert.Equal(t, 15, result.Left.Key)
 	result = bst.Search(35)
+	assert.Equal(t, 1, result.Size)
 	assert.Equal(t, nilN, result.Left)
 	assert.Equal(t, nilN, result.Right)
+	bst.Delete(80)
+	assert.Equal(t, 4, bst.Root.Size)
+	bst.Delete(15)
+	assert.Equal(t, 3, bst.Root.Size)
+	result = bst.Search(30)
+	assert.Equal(t, 2, result.Size)
 }
 
 func TestBST_DeleteRoot(t *testing.T) {
@@ -130,9 +150,10 @@ func TestBST_DeleteRoot(t *testing.T) {
 	bst.Insert(15)
 	bst.Insert(30)
 	bst.Insert(35)
-
+	assert.Equal(t, 6, bst.Root.Size)
 	bst.Delete(40)
 	assert.Equal(t, 80, bst.Root.Key)
+	assert.Equal(t, 5, bst.Root.Size)
 	result := bst.Search(40)
 	var nilN *Node
 	assert.Equal(t, nilN, result)
