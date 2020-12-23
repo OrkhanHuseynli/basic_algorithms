@@ -193,3 +193,23 @@ func TestBST_FindNextLarger(t *testing.T) {
 	nln = bst.FindNextLarger(14)
 	assert.Equal(t, 20, nln.Key)
 }
+
+
+func TestBST_Rank(t *testing.T) {
+	bst := NewBST(40)
+	bst.Insert(20)
+	bst.Insert(80)
+	bst.Insert(15)
+	bst.Insert(30)
+	bst.Insert(35)
+	r := bst.Rank(10)
+	assert.Equal(t, 0, r)
+	r = bst.Rank(17)
+	assert.Equal(t, 1, r)
+	r = bst.Rank(40)
+	assert.Equal(t, 5, r)
+	r = bst.Rank(80)
+	assert.Equal(t, 6, r)
+	r = bst.Rank(90)
+	assert.Equal(t, 6, r)
+}

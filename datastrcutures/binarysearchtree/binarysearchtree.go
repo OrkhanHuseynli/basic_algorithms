@@ -134,3 +134,32 @@ func FindNextLarger(n *Node) *Node {
 	}
 	return n.Parent
 }
+
+func (b *BST) Rank(d int) int {
+	return Rank(b.Root, d)
+}
+
+func Rank(n *Node, d int) int {
+	leftSize := 0
+	if  n.Left != nil {
+		leftSize = n.Left.Size
+	}
+
+	if d == n.Key {
+		return leftSize + 1
+	}
+
+	if d < n.Key {
+		if n.Left != nil {
+			return Rank(n.Left, d)
+		}
+		return 0
+	}
+
+
+	// if d > n.Key
+	if n.Right != nil {
+		return  leftSize + 1 + Rank(n.Right, d)
+	}
+	return leftSize + 1
+}
