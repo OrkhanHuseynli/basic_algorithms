@@ -163,3 +163,27 @@ func Rank(n *Node, d int) int {
 	}
 	return leftSize + 1
 }
+
+// if Node doesn’t have Parent property/field
+
+func FindParent(root, n *Node) *Node {
+
+	if root.Left == n || root.Right == n {
+		return root
+	}
+
+	if n.Key < root.Key {
+		if root.Left != nil {
+			return FindParent(root.Left, n)
+		}
+		return nil
+	}
+
+	if n.Key > root.Key  {
+		if root.Right != nil {
+			return FindParent(root.Right, n)
+		}
+		return nil
+	}
+	return nil
+}

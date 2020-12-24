@@ -213,3 +213,38 @@ func TestBST_Rank(t *testing.T) {
 	r = bst.Rank(90)
 	assert.Equal(t, 6, r)
 }
+
+
+func Test_FindParent(t *testing.T) {
+	bst := NewBST(40)
+	bst.Insert(20)
+	bst.Insert(80)
+	bst.Insert(15)
+	bst.Insert(30)
+	bst.Insert(35)
+	n := bst.Search(40)
+	p := FindParent(bst.Root, n)
+	var nilNode *Node
+	assert.Equal(t, nilNode, p)
+
+	n = bst.Search(20)
+	p = FindParent(bst.Root, n )
+	assert.Equal(t, bst.Root, p)
+
+	n = bst.Search(80)
+	p = FindParent(bst.Root, n )
+	assert.Equal(t, bst.Root, p)
+
+	n = bst.Search(15)
+	p = FindParent(bst.Root, n )
+	assert.Equal(t, bst.Root.Left, p)
+
+	n = bst.Search(30)
+	p = FindParent(bst.Root, n )
+	assert.Equal(t, bst.Root.Left, p)
+
+	n = bst.Search(35)
+	p = FindParent(bst.Root, n )
+	assert.Equal(t, bst.Root.Left.Right, p)
+
+}
