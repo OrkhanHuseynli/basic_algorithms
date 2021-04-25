@@ -7,7 +7,7 @@ func QuickSort(arr []int, start, end int) {
 	}
 	pivot := partition(arr, start, end)
 	QuickSort(arr, 0, pivot)
-	QuickSort(arr, pivot+1, end)
+ 	QuickSort(arr, pivot+1, end)
 }
 
 

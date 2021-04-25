@@ -30,3 +30,12 @@ func TestQuickSort(t *testing.T) {
 		})
 	}
 }
+
+
+func TestQuickSort2(t *testing.T) {
+	in, out := []int{3, 1, -3, 4}, []int{-3, 1,3,4}
+
+	fmt.Sprintf("Test case # %v", in)
+	QuickSort(in, 0, len(in)-1)
+	assert.Equal(t, out, in)
+}
