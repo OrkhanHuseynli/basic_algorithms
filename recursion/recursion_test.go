@@ -144,3 +144,46 @@ func TestCalculateTaylorSeriesForExponentialWithHornerRule(t *testing.T) {
 		})
 	}
 }
+
+
+var flagtestsFibonacci = []struct {
+	in  int
+	out int
+}{
+	{0, 0},
+	{1, 1},
+	{2, 1},
+	{3, 2},
+	{4, 3},
+	{5, 5},
+	{6, 8},
+	{7, 13},
+	{8, 21},
+}
+
+func TestFibonacci(t *testing.T) {
+
+	for i, tt := range flagtestsFibonacci {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			result := FibonacciRecursively(tt.in)
+			assert.Equal(t, tt.out, result)
+		})
+	}
+
+	for i, tt := range flagtestsFibonacci {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			result := FibonacciIteratively(tt.in)
+			assert.Equal(t, tt.out, result)
+		})
+	}
+
+	for i, tt := range flagtestsFibonacci {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			result := FibonacciWithMemoization(tt.in)
+			assert.Equal(t, tt.out, result)
+		})
+	}
+}

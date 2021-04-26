@@ -85,3 +85,44 @@ func calculateTaylorSeriesForExponentialWithHornerRuleUtil(x, degree float32, s 
 	s = 1 + (x/degree)*s
 	return calculateTaylorSeriesForExponentialWithHornerRuleUtil(x, degree-1, s)
 }
+
+
+func FibonacciRecursively(n int) int {
+	if n <= 1 {
+		return n
+	}
+	return  FibonacciRecursively(n-2) + FibonacciRecursively(n-1)
+}
+
+func FibonacciIteratively(n int) int {
+	if n <= 1 {
+		return n
+	}
+	prev := 0
+	next := 1
+	for i:=0; i<n-1; i++ {
+		temp := next
+		next = prev + next
+		prev = temp
+	}
+	return next
+}
+
+func FibonacciWithMemoization(n int) int {
+	memoArray := make([]int, n+1)
+	for i:=0; i<n+1; i++ {
+		memoArray[i]=-1
+	}
+	return fibonacciWithMemoizationUtil(n, memoArray)
+}
+
+func fibonacciWithMemoizationUtil(n int, memoArray []int) int {
+	if memoArray[n] == -1 {
+		if n <= 1 {
+			memoArray[n]=n
+		} else {
+			memoArray[n] = fibonacciWithMemoizationUtil(n-2, memoArray) + fibonacciWithMemoizationUtil(n-1, memoArray)
+		}
+	}
+	return memoArray[n]
+}
