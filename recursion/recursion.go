@@ -1,5 +1,10 @@
 package recursion
 
+import (
+	"fmt"
+	"strconv"
+)
+
 var x1 = 0
 
 /*
@@ -116,13 +121,46 @@ func FibonacciWithMemoization(n int) int {
 	return fibonacciWithMemoizationUtil(n, memoArray)
 }
 
-func fibonacciWithMemoizationUtil(n int, memoArray []int) int {
-	if memoArray[n] == -1 {
+func fibonacciWithMemoizationUtil(n int, memoiArray []int) int {
+	if memoiArray[n] == -1 {
 		if n <= 1 {
-			memoArray[n]=n
+			memoiArray[n]=n
 		} else {
-			memoArray[n] = fibonacciWithMemoizationUtil(n-2, memoArray) + fibonacciWithMemoizationUtil(n-1, memoArray)
+			memoiArray[n] = fibonacciWithMemoizationUtil(n-2, memoiArray) + fibonacciWithMemoizationUtil(n-1, memoiArray)
 		}
 	}
-	return memoArray[n]
+	return memoiArray[n]
+}
+
+func GetCombinations(n, r int) int {
+	if r > n {
+		panic("r cannot be bigger than n")
+	}
+	numerator := Factorial(n)
+	denominator1 := Factorial(n-r)
+	denominator2 := Factorial(r)
+	return  numerator/(denominator1*denominator2)
+}
+
+func GetCombinationsRecursively(n, r int)  int {
+	if n==r || r==0{
+		return 1
+	}
+	return GetCombinationsRecursively(n-1, r-1) + GetCombinationsRecursively(n-1, r)
+}
+
+func HanoiTower(n int, a,b,c string) [][]string {
+	var output [][]string
+	hanoiTowerUtil(n, a,b,c, &output)
+	return output
+}
+
+func hanoiTowerUtil(n int, a,b,c string, output *[][]string){
+	if n > 0 {
+		hanoiTowerUtil(n-1, a,c,b, output)
+		fmt.Printf("Move 1 from %v to %v using %v \n", a, c,b)
+		result:= []string{strconv.Itoa(1), a, b,c}
+		*output = append(*output, result)
+		hanoiTowerUtil(n-1, b,a,c, output)
+	}
 }

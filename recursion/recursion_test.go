@@ -187,3 +187,58 @@ func TestFibonacci(t *testing.T) {
 		})
 	}
 }
+
+
+var flagtestsCombinations = []struct {
+	n  int
+	r int
+	out int
+}{
+	{1, 0,1},
+	{1, 1,1},
+	{3, 2,3},
+	{5, 2,10},
+	{13, 6,1716},
+
+
+}
+func TestGetCombinations(t *testing.T) {
+	for i, tt := range flagtestsCombinations {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			result := GetCombinations(tt.n, tt.r)
+			assert.Equal(t, tt.out, result)
+		})
+	}
+
+	for i, tt := range flagtestsCombinations {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			result := GetCombinationsRecursively(tt.n, tt.r)
+			assert.Equal(t, tt.out, result)
+		})
+	}
+}
+
+
+var flagtestsHanoiTower = []struct {
+	n  int
+	a, b,c string
+	out [][]string
+}{
+	{1, "a", "b", "c",[][]string{{"1", "a", "b", "c"}}},
+	{2, "a", "b", "c",[][]string{{"1", "a", "c", "b"}, {"1", "a", "b", "c"}, {"1", "b", "a", "c"}}},
+	{3, "a", "b", "c",[][]string{{"1", "a", "b", "c"}, {"1", "a", "c", "b"}, {"1", "c", "a", "b"},
+		{"1", "a", "b", "c"}, {"1", "b", "c", "a"}, {"1", "b", "a", "c"}, {"1", "a", "b", "c"}}},
+}
+
+func TestHanoiTower(t *testing.T) {
+	for i, tt := range flagtestsHanoiTower {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+
+			result := HanoiTower(tt.n, tt.a,tt.b, tt.c)
+			assert.Equal(t, tt.out, result)
+		})
+	}
+}
