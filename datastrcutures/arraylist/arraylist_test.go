@@ -104,3 +104,11 @@ func TestArrayList_Reverse(t *testing.T) {
 	assert.Equal(t, list.Get(0), 100)
 	assert.Equal(t, list.Get(6), 5)
 }
+
+func TestRearrangePositives(t *testing.T) {
+	arr := []int{2,4,-1,-99,5,99,10,-4,5,5,-123}
+	expected := []int{-123,-4,-1,-99,5,99,10,4,5,5,2}
+	RearrangePositives(arr[:])
+	assert.Equal(t, expected, arr)
+
+}

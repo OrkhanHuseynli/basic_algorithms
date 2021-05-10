@@ -151,3 +151,21 @@ func checkType(elem interface{}, errMessage string, a *ArrayList){
 func getType(elem interface{})string{
 	return reflect.TypeOf(elem).String()
 }
+
+func RearrangePositives(arr []int)  {
+	i:=0
+	j:=len(arr)-1
+	for i < j {
+		for arr[i] < 0 {
+			i++
+		}
+		for arr[j] > 0 {
+			j--
+		}
+		if i < j {
+			temp := arr[i]
+			arr[i] = arr[j]
+			arr[j] = temp
+		}
+	}
+}
