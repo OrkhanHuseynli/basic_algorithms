@@ -169,3 +169,71 @@ func RearrangePositives(arr []int)  {
 		}
 	}
 }
+
+func Merge(arr1, arr2 []int)[]int{
+	l1 :=  len(arr1)
+	l2 :=  len(arr2)
+	arr3 := make([]int,l1+l2)
+	j := 0
+	k := 0
+	i:= 0
+	for j<l1 && k<l2 {
+		if arr1[j] < arr2[k]{
+			arr3[i] = arr1[j]
+			j++
+		} else {
+			arr3[i]= arr2[k]
+			k++
+		}
+		i++
+	}
+
+	for j<l1 {
+			arr3[i]=arr1[j]
+			j++
+			i++
+	}
+
+
+	for k<l2 {
+			arr3[i]=arr2[k]
+			k++
+			i++
+	}
+
+	return arr3
+}
+
+
+func FindMissingElement(sortedArr []int) (int, bool){
+	if len(sortedArr) == 0 {
+		return 0, false
+	}
+
+	diff := sortedArr[0]
+	for i:=0; i<len(sortedArr); i++ {
+		actualDiff := sortedArr[i] - i
+		if actualDiff  != diff {
+			return diff + i, true
+		}
+	}
+	return 0, false
+}
+
+func FindMultipleMissingElements(sortedArr []int) []int {
+	result := make([]int,0)
+	if len(sortedArr) == 0 {
+		return result
+	}
+	diff := sortedArr[0]
+	for i:=0; i<len(sortedArr); i++ {
+		actualDiff := sortedArr[i] - i
+		if actualDiff  != diff {
+			for actualDiff != diff {
+				result = append(result, diff+i)
+				diff++
+			}
+		}
+	}
+	return result
+}

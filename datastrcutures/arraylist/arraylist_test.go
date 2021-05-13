@@ -1,6 +1,7 @@
 package arraylist
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -111,4 +112,68 @@ func TestRearrangePositives(t *testing.T) {
 	RearrangePositives(arr[:])
 	assert.Equal(t, expected, arr)
 
+}
+
+func TestMerge(t *testing.T) {
+	arr1 := []int{2,4,9,33}
+	arr2 := []int{2,3,9,99,105,200}
+	expected := []int{2,2,3,4,9,9,33,99,105,200}
+	actual := Merge(arr1,arr2)
+	assert.Equal(t, expected, actual)
+
+	arr1 = []int{-22,4,9,33}
+	arr2 = []int{2,3,9,99,105,200}
+	expected = []int{-22,2,3,4,9,9,33,99,105,200}
+	actual = Merge(arr1,arr2)
+	assert.Equal(t, expected, actual)
+
+	arr1 = []int{}
+	arr2 = []int{2,3,9,99,105,200}
+	expected = []int{2,3,9,99,105,200}
+	actual = Merge(arr1,arr2)
+	assert.Equal(t, expected, actual)
+}
+
+
+var flagTestsFindMissingElement = []struct {
+	in  []int
+	outInt int
+	outOk bool
+}{
+	{[]int{},0, false},
+	{[]int{1},0, false},
+	{[]int{1,3},2, true},
+	{[]int{-3,-2,-1,0,1,3,4,5},2, true},
+	{[]int{-3,-1,0,1,2,3,4,5},-2, true},
+}
+func TestFindMissingElement(t *testing.T) {
+	for i, tt := range flagTestsFindMissingElement {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			actual, ok := FindMissingElement(tt.in)
+			assert.Equal(t, tt.outInt, actual)
+			assert.Equal(t, tt.outOk, ok)
+		})
+	}
+}
+
+var flagTestsFindMultipleMissingElements = []struct {
+	in  []int
+	out []int
+}{
+	{[]int{},[]int{}},
+	{[]int{1,3},[]int{2}},
+	{[]int{1,3,4,5,7},[]int{2,6}},
+	{[]int{1,3,4,5,9},[]int{2,6,7,8}},
+
+}
+
+func TestFindMultipleMissingElements(t *testing.T) {
+	for i, tt := range flagTestsFindMultipleMissingElements {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			actual := FindMultipleMissingElements(tt.in)
+			assert.Equal(t, tt.out, actual)
+		})
+	}
 }
