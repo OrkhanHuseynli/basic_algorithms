@@ -177,3 +177,112 @@ func TestFindMultipleMissingElements(t *testing.T) {
 		})
 	}
 }
+
+
+var flagTestsCalculateDuplicate = []struct {
+	in  []int
+	out int
+}{
+	{[]int{},0},
+	{[]int{1,3},0},
+	{[]int{1,3,4,5,7},0},
+	{[]int{1,3,4,4,9},2},
+	{[]int{1,3,4,4,9,10,11,13,13,13,77},5},
+
+}
+
+func TestCountDuplicate(t *testing.T) {
+	for i, tt := range flagTestsCalculateDuplicate {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			actual := CountDuplicate(tt.in)
+			assert.Equal(t, tt.out, actual)
+		})
+	}
+}
+
+// for lowercase only
+func TestFindDuplicateInStringWithBitwise(t *testing.T) {
+	FindDuplicateInStringWithBitwise("hellodear")
+}
+
+
+var flagTestsStrPermutation = []struct {
+	in  string
+	out [][]rune
+}{
+	{"", [][]rune(nil)},
+	{"B",[][]rune{{'B'}}},
+	{"AB",[][]rune{{'A','B'}, {'B','A'}}},
+	{"BA",[][]rune{{'B','A'}, {'A','B'}}},
+	{"ABC",[][]rune{{'A', 'B', 'C'},{'A', 'C', 'B'}, {'B','A', 'C'}, {'B','C','A'}, {'C', 'A', 'B'},{'C', 'B', 'A'}}},
+	{"ABCD",[][]rune{
+		{'A', 'B', 'C', 'D'},{'A', 'B', 'D', 'C'},{'A', 'C', 'B', 'D'}, {'A', 'C', 'D', 'B'},{'A', 'D', 'B', 'C'},{'A', 'D', 'C', 'B'},
+		{'B', 'A', 'C', 'D'},{'B', 'A', 'D', 'C'},{'B', 'C', 'A', 'D'}, {'B', 'C', 'D', 'A'},{'B', 'D', 'A', 'C'},{'B', 'D', 'C', 'A'},
+		{'C', 'A', 'B', 'D'},{'C', 'A', 'D', 'B'},{'C', 'B', 'A', 'D'}, {'C', 'B', 'D', 'A'},{'C', 'D', 'A', 'B'},{'C', 'D', 'B', 'A'},
+		{'D', 'A', 'B', 'C'},{'D', 'A', 'C', 'B'},{'D', 'B', 'A', 'C'}, {'D', 'B', 'C', 'A'},{'D', 'C', 'A', 'B'},{'D', 'C', 'B', 'A'}},
+	},
+}
+
+
+func TestStringPermutation(t *testing.T) {
+	for i, tt := range flagTestsStrPermutation {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			actual := StringPermutation(tt.in)
+			assert.Equal(t, tt.out, actual)
+		})
+	}
+
+}
+
+var flagTestsStrPermutationBySwap = []struct {
+	in  string
+	out [][]rune
+}{
+	{"", [][]rune(nil)},
+	{"B",[][]rune{{'B'}}},
+	{"AB",[][]rune{{'A','B'}, {'B','A'}}},
+	{"BA",[][]rune{{'B','A'}, {'A','B'}}},
+	{"ABC",[][]rune{{'A', 'B', 'C'},{'A', 'C', 'B'}, {'B','A', 'C'}, {'B','C','A'}, {'C', 'B', 'A'}, {'C', 'A', 'B'}}},
+	{"ABCD",[][]rune{
+		{'A', 'B', 'C', 'D'},{'A', 'B', 'D', 'C'},{'A', 'C', 'B', 'D'}, {'A', 'C', 'D', 'B'},{'A', 'D', 'C', 'B'},{'A', 'D', 'B', 'C'},
+		{'B', 'A', 'C', 'D'},{'B', 'A', 'D', 'C'},{'B', 'C', 'A', 'D'}, {'B', 'C', 'D', 'A'},{'B', 'D', 'C', 'A'},{'B', 'D', 'A', 'C'},
+		{'C', 'B', 'A', 'D'},{'C', 'B', 'D', 'A'},{'C', 'A', 'B', 'D'},{'C', 'A', 'D', 'B'}, {'C', 'D', 'A', 'B'},{'C', 'D', 'B', 'A'},
+		{'D', 'B', 'C', 'A'},{'D', 'B', 'A', 'C'},{'D', 'C', 'B', 'A'}, {'D', 'C', 'A', 'B'},{'D', 'A', 'C', 'B'},{'D', 'A', 'B', 'C'}},
+	},
+}
+
+func TestStringPermutationBySwap(t *testing.T) {
+	for i, tt := range flagTestsStrPermutationBySwap {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			actual := StringPermutationBySwap(tt.in)
+			assert.Equal(t, tt.out, actual)
+		})
+	}
+
+}
+
+var flagTestsStrPermutationUnique = []struct {
+	in  string
+	out [][]rune
+}{
+	{"", [][]rune(nil)},
+	{"B",[][]rune{{'B'}}},
+	{"AB",[][]rune{{'A','B'}, {'B','A'}}},
+	{"BA",[][]rune{{'B','A'}, {'A','B'}}},
+	{"ABC",[][]rune{{'A', 'B', 'C'},{'A', 'C', 'B'}, {'B','A', 'C'}, {'B','C','A'}, {'C', 'A', 'B'},{'C', 'B', 'A'}}},
+	{"ABA",[][]rune{{'A', 'A', 'B'},{'B', 'A', 'A'}, {'A','B', 'A'}}},
+}
+
+func TestStringPermutationUnique(t *testing.T) {
+	for i, tt := range flagTestsStrPermutationUnique {
+		val := fmt.Sprintf("Test case # %v", i)
+		t.Run(val, func(t *testing.T) {
+			actual := StringPermutationUnique(tt.in)
+			assert.Equal(t, tt.out, actual)
+		})
+	}
+
+}

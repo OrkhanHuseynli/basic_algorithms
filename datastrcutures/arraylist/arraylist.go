@@ -1,6 +1,7 @@
 package arraylist
 
 import (
+	"fmt"
 	"reflect"
 	"strconv"
 )
@@ -236,4 +237,175 @@ func FindMultipleMissingElements(sortedArr []int) []int {
 		}
 	}
 	return result
+}
+
+func CountDuplicate(sortedArray [] int) int {
+	count := 0
+	for i:=0; i< len(sortedArray)-1; i++ {
+		if sortedArray[i] == sortedArray[i+1] {
+			j := i+1
+			for sortedArray[i] == sortedArray[j] && j < len(sortedArray) {
+				j++
+			}
+			fmt.Println(strconv.Itoa(sortedArray[i]) + " appearing " + strconv.Itoa(j-i) + " times")
+			count = count +  j - i
+			i = j - 1
+		}
+	}
+	return count
+}
+
+func FindDuplicateInStringWithBitwise(str string) {
+	var x int32 = 'a'
+	var y int32 = 0
+	for _, v := range str {
+		z := int32(1)
+		val := v-x
+		z = z<<val
+		if y|z == y {
+			fmt.Printf("duplicate letter \"%s\" \n", string(v))
+		} else {
+			y = y|z
+		}
+	}
+}
+
+func StringPermutation(str string) [][]rune {
+	var result [][]rune
+	target := make([]rune, len(str))
+	if len(str) == 0 {
+		return result
+	}
+	if len(str) == 1 {
+		return [][]rune{{rune(str[0])}}
+	}
+	for i,v := range str {
+		target[i]=v
+	}
+	visited := make([]bool, len(target))
+	cell := make([]rune, len(target))
+	permuteRunes(0, visited, target[:], cell[:], &result)
+
+	return result
+}
+
+func permuteRunes(k int, visited []bool, target []rune, cell []rune, result *[][]rune){
+	if k < len(target) {
+		for i:=0; i<len(visited); i++ {
+			if !visited[i] {
+				cell[k]=target[i]
+				visited[i]=true
+				k++
+				permuteRunes(k, visited, target, append(cell, []rune{}...), result)
+				visited[i]=false
+				k--
+			}
+		}
+	} else {
+		fmt.Println(cell)
+		newCell := make([]rune, len(cell))
+		copy(newCell, cell)
+		*result = append(*result, newCell)
+	}
+}
+
+type strHashSet struct {
+	m map[interface{}][]rune
+}
+
+func NewStrHashSet() strHashSet {
+	return strHashSet{make(map[interface{}][]rune)}
+}
+func (s *strHashSet)Add(cell []rune) {
+	s.m[string(cell)]=cell
+}
+
+func (s *strHashSet)ToArray()[][]rune{
+	var result [][]rune
+	for i, v := range s.m {
+		fmt.Println(i)
+		result = append(result,v)
+	}
+	return result
+}
+
+
+func StringPermutationUnique(str string) [][]rune {
+	m := NewStrHashSet()
+	var result [][]rune
+	target := make([]rune, len(str))
+	if len(str) == 0 {
+		return result
+	}
+	if len(str) == 1 {
+		return [][]rune{{rune(str[0])}}
+	}
+	for i,v := range str {
+		target[i]=v
+	}
+	visited := make([]bool, len(target))
+	cell := make([]rune, len(target))
+	permuteUnique(0, visited, target[:], cell[:], &m)
+	result = m.ToArray()
+	return result
+}
+
+
+func permuteUnique(k int, visited []bool, set, cell []rune, result *strHashSet){
+	if k < len(visited) {
+		for i:=0; i<len(visited); i++ {
+			if !visited[i] {
+				cell[k]=set[i]
+				visited[i]=true
+				k++
+				permuteUnique(k, visited, set, cell, result)
+				visited[i]=false
+				k--
+			}
+		}
+	} else {
+		cell_ := make([]rune, len(visited))
+		copy(cell_, cell)
+		result.Add(cell_)
+	}
+}
+
+
+func StringPermutationBySwap(str string) [][]rune {
+	var result [][]rune
+	if len(str) == 0 {
+		return result
+	}
+	if len(str) == 1 {
+		return [][]rune{{rune(str[0])}}
+	}
+
+	target := make([]rune, len(str))
+	for i,v := range str {
+		target[i]=v
+	}
+	permuteBySwap(0, target, &result)
+	return result
+}
+
+func permuteBySwap(l int, arr []rune, result *[][]rune){
+	if l == len(arr) {
+		cell_ := make([]rune, len(arr))
+		copy(cell_, arr)
+		*result = append(*result, cell_)
+	} else {
+		for i:=l; i<len(arr); i++ {
+			swapRuneArr(arr, i,l)
+			l++
+			permuteBySwap(l, arr, result)
+			l--
+			swapRuneArr(arr, i,l)
+		}
+	}
+}
+
+func swapRuneArr(arr []rune, index1, index2 int){
+	temp := arr[index1]
+	arr[index1] = arr[index2]
+	arr[index2] = temp
 }
