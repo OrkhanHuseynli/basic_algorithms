@@ -10,7 +10,7 @@ type HashSet struct {
 	set map[interface{}]int
 }
 
-func NewHashSet(m map[interface{}]int)  HashSet {
+func NewHashSet(m map[interface{}]int) HashSet {
 	return HashSet{0, nil,m}
 }
 

@@ -9,7 +9,7 @@ type Heap struct {
 	array []int
 }
 
-func NewHeap( arr []int)*Heap{
+func NewHeap( arr []int)*Heap {
 	h := Heap{len(arr), arr}
 	return &h
 }
